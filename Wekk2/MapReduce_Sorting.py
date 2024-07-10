@@ -6,11 +6,10 @@ class MapReduceSorting(MRJob):
         if 'status_id' not in line:
             data = line.split(',')
             datatime = data[2].strip()
-            if ' ' in data:
-                num_reactions = data[3].strip()
-                year = datatime.split(' ')[0].split('/')[2]
-                if int(num_reactions) > 3000:
-                    yield year,num_reactions
+            num_reactions = data[3].strip()
+            year = datatime.split(' ')[0].split('/')[2]
+            if int(num_reactions) > 3000:
+                yield year,num_reactions
 
     def reducer(self, key, values):
         yield key, sorted(values, reverse=True)
